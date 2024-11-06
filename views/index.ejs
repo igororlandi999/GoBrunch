@@ -70,7 +70,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const list = document.getElementById('list');
-                    list.innerHTML = '';  // Limpa a lista
+                    list.innerHTML = '';  // Limpa a lista antes de adicionar novos itens
                     data.items.forEach((item, index) => {
                         const div = document.createElement('div');
                         div.className = 'list-item';
@@ -86,6 +86,9 @@
                         div.appendChild(text);
                         list.appendChild(div);
                     });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista:', error);
                 });
         }
     </script>
@@ -99,6 +102,7 @@
             </div>
         </div>
         <div class="main" id="list">
+            <!-- A lista dinâmica será inserida aqui -->
         </div>
     </div>
 </body>

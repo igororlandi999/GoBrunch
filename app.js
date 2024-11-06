@@ -1,14 +1,18 @@
-const express = require('express');
+import express from 'express'; // Usando import no lugar de require
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuração da engine de visualização
+// Configuração da engine de visualização (EJS)
 app.set('view engine', 'ejs');
 
-// Servir arquivos estáticos (se necessário)
+// Servir arquivos estáticos (caso você tenha arquivos de CSS ou JS externos)
 app.use(express.static('public'));
 
-// Rota principal para renderizar o HTML
+// Middleware para interpretar os dados do formulário (caso necessário)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Rota principal para renderizar o HTML (index.ejs)
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -16,6 +20,10 @@ app.get('/', (req, res) => {
 // Rota para retornar a lista de itens
 app.get('/items', (req, res) => {
     const quantity = parseInt(req.query.quantity) || 0; // Obtém a quantidade da query string
+    if (quantity < 1) {
+        return res.json({ items: [] }); // Retorna uma lista vazia se a quantidade for inválida
+    }
+
     const items = [];
 
     // Gera uma lista de itens conforme a quantidade solicitada
