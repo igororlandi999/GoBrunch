@@ -1,6 +1,6 @@
 import express from 'express'; // Usando import no lugar de require
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // Usando a variável de ambiente do Render
 
 // Configuração da engine de visualização (EJS)
 app.set('view engine', 'ejs');
@@ -35,7 +35,7 @@ app.get('/items', (req, res) => {
     res.json({ items });
 });
 
-// Inicia o servidor
+// Inicia o servidor na porta fornecida pelo Render ou 3000 (caso local)
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
